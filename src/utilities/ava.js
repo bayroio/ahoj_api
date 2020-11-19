@@ -2,17 +2,18 @@ const ava = require("avalanche");
 const BN = require('bn.js');
 
 const AVA_IP = "localhost";
-const AVA_PORT = 9650;  //"9650";
-const AVA_PROTOCOL = "http";
+const AVA_PORT = 443; //9650;  //"9650";
+const AVA_PROTOCOL = "https"; //"http";
 const AVA_NETWORK_ID = 5; //4;  //"5"; //12345
 const AVA_CHAIN_ID = "X"; //'2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm';
-const AVA_RPC_URL = "https://api.avax-test.network" //"https://testapi.avax.network";  
+const AVA_RPC_URL = "api.avax-test.network" //"https://testapi.avax.network";  
 const AVAX_FEE =  1000000;
 const ASSET_ID = "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK";  //AVAX
 
 const bintools = ava.BinTools.getInstance();
 
-const avalanche = new ava.Avalanche(AVA_IP, parseInt(AVA_PORT), AVA_PROTOCOL, parseInt(AVA_NETWORK_ID), AVA_CHAIN_ID);
+//const avalanche = new ava.Avalanche(AVA_IP, parseInt(AVA_PORT), AVA_PROTOCOL, parseInt(AVA_NETWORK_ID), AVA_CHAIN_ID);
+const avalanche = new ava.Avalanche(AVA_RPC_URL, parseInt(AVA_PORT), AVA_PROTOCOL, parseInt(AVA_NETWORK_ID), AVA_CHAIN_ID);
 
 let avm = avalanche.XChain();
 avm.setTxFee(new BN(AVAX_FEE));

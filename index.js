@@ -23,7 +23,7 @@ app.use(cors(origin))
 //To help protect against brute force/DDoS attacks, we can limit the amount of requests using express-rate-limit. 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5, // 5 requests,
+  max: 50, //5 requests,
 })
 app.use(limiter)
 
@@ -35,9 +35,13 @@ app.use(cors())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(cors())
 
 app.get('/', wallet.rootMessage)
-app.get('/api/createWallet', wallet.createWallet)
+
+app.get('/api/getWalletAddress', 
+[
+  check('DID_Token').not().isEmpty().isLength({ min: 760 }).trim(),
+],
+limiter, wallet.getWalletAddress)
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
