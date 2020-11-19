@@ -6,7 +6,7 @@ const rateLimit = require('express-rate-limit')
 const { check } = require('express-validator')
 const cors = require('cors')
 
-const wallet = require('./wallet')
+const wallet = require('./src/api/wallet/wallet')
 
 require('dotenv').config()
 

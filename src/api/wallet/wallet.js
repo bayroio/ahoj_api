@@ -1,6 +1,6 @@
 import { Buffer } from "avalanche"
 import { Magic } from "@magic-sdk/admin"
-import { avm, keyStore, xKeychain, bintools } from './ava'
+import { avm, keyStore, xKeychain, bintools } from '../../utilities/ava'
 
 const {validationResult} = require('express-validator')
 
