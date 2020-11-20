@@ -2,11 +2,11 @@ const ava = require("avalanche");
 const BN = require('bn.js');
 
 const AVA_IP = "localhost";
-const AVA_PORT = 443; //9650;  //"9650";
+const AVA_PORT = 443; //9650;
 const AVA_PROTOCOL = "https"; //"http";
-const AVA_NETWORK_ID = 5; //4;  //"5"; //12345
-const AVA_CHAIN_ID = "X"; //'2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm';
-const AVA_RPC_URL = "api.avax-test.network" //"https://testapi.avax.network";  
+const AVA_NETWORK_ID = 5; //4;  //12345
+const AVA_CHAIN_ID = '2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm'; //'X';
+const AVA_RPC_URL = 'api.avax-test.network'; //'testapi.avax.network';  
 const AVAX_FEE =  1000000;
 const ASSET_ID = "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK";  //AVAX
 

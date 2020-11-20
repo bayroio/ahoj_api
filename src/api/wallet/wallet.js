@@ -10,8 +10,11 @@ const rootMessage = (request, response) => {
 
 const createUser = async (username, password) => {
     try {
-        await keyStore.createUser(username, password)
+        console.log("succesfull!!")
+        let succesfull = await keyStore.createUser(username, password)
+        console.log("succesfull: ", succesfull)
     } catch(error) {
+        return response.status(422).json({status: 'Wallet API - Get Address - error: ', message: error})
         throw error.message;
     } 
 }
@@ -25,7 +28,9 @@ const getFirstAddress = async (username, password) => {
     console.log("username: ", username);
     console.log("password: ", password);
     let listAddresses = await avm.listAddresses(username, password) 
-    console.log("List Address: ", listAddresses)
+    console.log("List Address 0: ", listAddresses[0])
+    console.log("List Address 1: ", listAddresses[1])
+    console.log("List Address 2: ", listAddresses[2])
     return listAddresses[0];
 }
 
@@ -46,11 +51,14 @@ const getAddress = async (request, response) => {
 
     try {
         await createUser(username, password)
-        avalancheAddress = await createAddress(username, password) 
+        avalancheAddress = await createAddress(username, password)
+        //await createUser("eherrador", "LFMOxto24")
+        //avalancheAddress = await createAddress("eherrador", "LFMOxto24") 
         console.log("En el try...")
     } catch(error) {
         console.log("En el catch...")
         avalancheAddress = await getFirstAddress(username, password) 
+        //avalancheAddress = await getFirstAddress("eherrador", "LFMOxto24")
         //return response.status(422).json({status: 'Wallet API - Get Address - error: ', message: error})
     } finally {
         return response.status(200).json({ address: avalancheAddress})
