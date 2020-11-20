@@ -12,7 +12,7 @@ const createUser = async (username, password) => {
     try {
         await keyStore.createUser(username, password)
     } catch(error) {
-        throw error;
+        throw error.message;
     } 
 }
 
@@ -21,29 +21,43 @@ const createAddress = async (username, password) => {
     return avalancheAddress;
 }
 
-const getWalletAddress = async (request, response) => {
+const getFirstAddress = async (username, password) => {
+    console.log("username: ", username);
+    console.log("password: ", password);
+    let listAddresses = await avm.listAddresses(username, password) 
+    console.log("List Address: ", listAddresses)
+    return listAddresses[0];
+}
+
+const getAddress = async (request, response) => {
     if (!request.header('apiKey') || request.header('apiKey') !== process.env.API_KEY) {
-        return response.status(401).json({status: 'error', message: 'Unauthorized'})
+        return response.status(401).json({status: 'Wallet API - Get Address - api key error: ', message: 'Unauthorized'})
     }
 
     const errors = validationResult(request)
     if (!errors.isEmpty()) {
-      return response.status(422).json({status: 'error', message: errors.array()})
+      return response.status(422).json({status: 'Wallet API - Get Address - validation error on request: ', message: errors.array()})
     }
 
+    let token = request.body.DID_Token;
+    let username = magic.token.decode(token)[1].sub;
+    let password = magic.token.decode(token)[1].add;
+    let avalancheAddress = ""
+
     try {
-        let token = request.body.DID_Token;
-        let username = magic.token.decode(token)[1].sub;
-        let password = magic.token.decode(token)[1].add;
         await createUser(username, password)
-        let avalancheAddress = await createAddress(username, password) 
-         return response.status(200).json({ address: avalancheAddress})
+        avalancheAddress = await createAddress(username, password) 
+        console.log("En el try...")
     } catch(error) {
-        return response.status(422).json({status: 'error', message: error})
+        console.log("En el catch...")
+        avalancheAddress = await getFirstAddress(username, password) 
+        //return response.status(422).json({status: 'Wallet API - Get Address - error: ', message: error})
+    } finally {
+        return response.status(200).json({ address: avalancheAddress})
     }
 }
 
 module.exports = {
     rootMessage,
-    getWalletAddress,
+    getAddress,
 }
