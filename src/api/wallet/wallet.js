@@ -119,10 +119,10 @@ const getAddress = async (request, response) => {
 
     try {
         console.log("*******************************+")
-        //username = "NINA92"
+        //username = "NINA100"
         //password = "LFMOxto24"
-        //console.log("username: ", username)
-        //console.log("password: ", password)
+        console.log("username: ", username)
+        console.log("password: ", password)
         if (await keyStore.createUser(username, password)) {
             avalancheAddress = await avm.createAddress(username, password)
         }
